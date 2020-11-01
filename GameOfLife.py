@@ -25,6 +25,7 @@ game_state[21, 23] = 1
 game_state[20, 23] = 1
 
 pause = False
+running = True
 
 while True:
 
@@ -37,11 +38,18 @@ while True:
     for event in events:
         if event.type == pygame.KEYDOWN:
             pause = not pause
+
         mouseClick = pygame.mouse.get_pressed()
         if sum(mouseClick) > 0:
             posX, posY = pygame.mouse.get_pos()
             celX, celY = int(np.floor(posX/dimCW)), int(np.floor(posY/dimCH))
             new_game_state[celX, celY] = not mouseClick[2]
+
+        if event.type == pygame.QUIT:
+            running = False
+
+    if not running:
+        pygame.quit()
 
     for y in range(0, ny):
         for x in range(0, nx):
